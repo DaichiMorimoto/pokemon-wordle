@@ -154,6 +154,9 @@ class PokemonWordleGameField:
                 print("ゲームクリア!!! お題:", self.questioner.target)
                 print("かかったラウンド:", self.round)
                 break
+            elif self.round == 5:
+                print("ゲームオーバー!!! お題:", self.questioner.target)
+                break
             
             self.round += 1
     
