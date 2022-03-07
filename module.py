@@ -34,7 +34,7 @@ class PokemonZukan:
 
 
 class PokemonWordleSolver:
-    def __init__(self, zukan: PokemonZukan, policy="entropy"):
+    def __init__(self, zukan: PokemonZukan, policy="random"):
         self.zukan = zukan
         self.candidate_list = zukan.copy()
         self.policy = policy
@@ -88,9 +88,20 @@ class PokemonWordleSolver:
         return entropy
         
     def get_candidate(self):
-        if self.policy == "entropy":
+        if self.policy == "entropy-rentora":
             if len(self.candidate_list) == len(self.zukan):
                 candidate = "レントラー"
+            else:
+                entropy_list = []
+                for pokemon in self.candidate_list:
+                    entropy = self.get_entropy(pokemon, self.candidate_list)
+                    entropy_list.append((pokemon, entropy))
+
+                entropy_list_sorted = sorted(entropy_list, key=lambda e: -e[1])
+                candidate = entropy_list_sorted[0][0]
+        elif self.policy == "entropy-jiransu":
+            if len(self.candidate_list) == len(self.zukan):
+                candidate = "ジーランス"
             else:
                 entropy_list = []
                 for pokemon in self.candidate_list:
